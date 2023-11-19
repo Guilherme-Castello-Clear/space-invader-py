@@ -1,4 +1,3 @@
-import time
 from turtle import Turtle
 
 
@@ -12,20 +11,28 @@ class Player(Turtle):
 		self.speed(1)
 		self.goto(0, -250)
 		self.left(90)
+		self.moving = False
 
 	def move_left(self):
-		self.left(10)
-		x = self.xcor()
-		x -= 20
-		self.setx(x)
-		self.right(10)
+		if not self.moving and self.xcor() > -280:
+			print(self.xcor())
+			self.moving = True
+			self.left(10)
+			x = self.xcor()
+			x -= 20
+			self.setx(x)
+			self.right(10)
+			self.moving = False
 
 	def move_right(self):
-		self.right(10)
-		x = self.xcor()
-		x += 20
-		self.setx(x)
-		self.left(10)
+		if not self.moving and self.xcor() < 280:
+			self.moving = True
+			self.right(10)
+			x = self.xcor()
+			x += 20
+			self.setx(x)
+			self.left(10)
+			self.moving = False
 
 
 class Bullet(Turtle):
@@ -41,5 +48,5 @@ class Bullet(Turtle):
 	def move(self):
 		self.sety(self.ycor() + self.speed)
 
-	def desapear(self):
+	def disappear(self):
 		self.hideturtle()
